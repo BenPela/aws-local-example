@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Globals:
+  Function:
+    Environment:
+    Runtime: nodejs16.x
+    MemorySize: 128
+    Architectures:
+      - x86_64
+  Api:
+    Cors:
+      AllowMethods: "'OPTIONS,GET,POST,DELETE,PATCH,PUT'"
+      AllowHeaders: "'Content-Type,Authorization,x-lomi-client,x-lomi-client-version'"
+      AllowOrigin: "'*'"
+Resources:
+  ApiDomainBasePathMapping:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      DomainName: !Ref api.example.com
+      RestApiId: !Ref ServerlessRestApi
+      Stage: !Ref ServerlessRestApiProdStage
+      BasePath: v1
+  V1:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: handler.handleV1
+      CodeUri: handlers
+      Events:
+        UsersGetEvent:
+          Type: Api
+          Properties:
+            Path: /users
+            Method: get
