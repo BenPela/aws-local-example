@@ -16,7 +16,7 @@ Resources:
         DomainName: api.example.com
         CertificateArn: arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012
         EndpointConfiguration: REGIONAL
-        BasePath: v2
+        BasePath: v1
       Cors:
         AllowMethods: "'OPTIONS,GET,POST,DELETE,PATCH,PUT'"
         AllowHeaders: "'Content-Type,Authorization,x-lomi-client,x-lomi-client-version'"
