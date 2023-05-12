@@ -7,19 +7,20 @@ Globals:
     MemorySize: 128
     Architectures:
       - x86_64
-  Api:
-    Cors:
-      AllowMethods: "'OPTIONS,GET,POST,DELETE,PATCH,PUT'"
-      AllowHeaders: "'Content-Type,Authorization,x-lomi-client,x-lomi-client-version'"
-      AllowOrigin: "'*'"
 Resources:
-  ApiDomainBasePathMapping:
-    Type: AWS::ApiGateway::BasePathMapping
+  Api:
+    Type: AWS::Serverless::Api
     Properties:
-      DomainName: !Ref api.example.com
-      RestApiId: !Ref ServerlessRestApi
-      Stage: !Ref ServerlessRestApiProdStage
-      BasePath: v1
+      StageName: prod
+      Domain:
+        DomainName: api.example.com
+        CertificateArn: arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012
+        EndpointConfiguration: REGIONAL
+        BasePath: v2
+      Cors:
+        AllowMethods: "'OPTIONS,GET,POST,DELETE,PATCH,PUT'"
+        AllowHeaders: "'Content-Type,Authorization,x-lomi-client,x-lomi-client-version'"
+        AllowOrigin: "'*'"
   V1:
     Type: AWS::Serverless::Function
     Properties:
